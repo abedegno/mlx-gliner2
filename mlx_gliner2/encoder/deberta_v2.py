@@ -225,18 +225,18 @@ class DisentangledSelfAttention(nn.Module):
 
         if self.share_att_key:
             pos_query_layer = self.transpose_for_scores(self.query_proj(rel_embeddings))
-            pos_query_layer = mx.repeat(pos_query_layer, repeat_count, axis=0)
+            pos_query_layer = mx.tile(pos_query_layer, (repeat_count, 1, 1))
             pos_key_layer = self.transpose_for_scores(self.key_proj(rel_embeddings))
-            pos_key_layer = mx.repeat(pos_key_layer, repeat_count, axis=0)
+            pos_key_layer = mx.tile(pos_key_layer, (repeat_count, 1, 1))
         else:
             pos_key_layer = None
             pos_query_layer = None
             if "c2p" in self.pos_att_type:
                 pos_key_layer = self.transpose_for_scores(self.pos_key_proj(rel_embeddings))
-                pos_key_layer = mx.repeat(pos_key_layer, repeat_count, axis=0)
+                pos_key_layer = mx.tile(pos_key_layer, (repeat_count, 1, 1))
             if "p2c" in self.pos_att_type:
                 pos_query_layer = self.transpose_for_scores(self.pos_query_proj(rel_embeddings))
-                pos_query_layer = mx.repeat(pos_query_layer, repeat_count, axis=0)
+                pos_query_layer = mx.tile(pos_query_layer, (repeat_count, 1, 1))
 
         score = mx.zeros_like(query_layer @ key_layer.transpose(0, 2, 1))
 

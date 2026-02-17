@@ -39,7 +39,7 @@ Usage:
     )
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .inference import GLiNER2, RegexValidator, Schema
 from .convert import convert
