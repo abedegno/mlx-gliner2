@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlx-gliner2"
+version = "0.1.0"
+description = "GLiNER2 information extraction on Apple Silicon via MLX"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "mlx>=0.30.0",
+    "transformers",
+    "huggingface_hub",
+    "safetensors",
+]
+
+[project.scripts]
+"mlx_gliner2.convert" = "mlx_gliner2.convert:main"
+
+[tool.setuptools.packages.find]
+include = ["mlx_gliner2*"]
