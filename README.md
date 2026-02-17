@@ -38,3 +38,27 @@ result = extractor.extract_entities(
 - **Batch Processing** - Process multiple texts efficiently
 
 No PyTorch or GPU required. Runs entirely on MLX.
+
+## Development
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+pip install pytest
+```
+
+## Testing
+
+Tests require a converted model. Run the conversion first, then pytest:
+
+```bash
+python -m mlx_gliner2.convert --repo-id fastino/gliner2-base-v1
+pytest tests/ -v
+```
+
+To use a model at a custom path, set the `MLX_GLINER2_MODEL` environment variable:
+
+```bash
+MLX_GLINER2_MODEL=path/to/model pytest tests/ -v
+```

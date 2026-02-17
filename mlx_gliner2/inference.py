@@ -566,7 +566,7 @@ class GLiNER2:
 
             for result in batch_results:
                 formatted = self._format_results(
-                    result, include_confidence,
+                    result, include_confidence, include_spans,
                     metadata.get("relation_order", []),
                     metadata.get("classification_tasks", []),
                 )
@@ -1135,6 +1135,7 @@ class GLiNER2:
         self,
         results: Dict,
         include_confidence: bool = False,
+        include_spans: bool = False,
         requested_relations: List[str] = None,
         classification_tasks: List[str] = None,
     ) -> Dict[str, Any]:
@@ -1186,7 +1187,7 @@ class GLiNER2:
                 elif isinstance(value[0], dict):
                     if key == "entities":
                         formatted[key] = self._format_entity_dict(
-                            value[0], include_confidence
+                            value[0], include_confidence, include_spans
                         )
                     else:
                         formatted[key] = value
@@ -1206,12 +1207,12 @@ class GLiNER2:
         return formatted
 
     def _format_entity_dict(
-        self, entity_dict: Dict, include_confidence: bool
+        self, entity_dict: Dict, include_confidence: bool, include_spans: bool = False
     ) -> Dict:
         formatted = {}
         for name, values in entity_dict.items():
             if isinstance(values, list):
-                if include_confidence:
+                if include_confidence or include_spans:
                     formatted[name] = values
                 else:
                     formatted[name] = [
